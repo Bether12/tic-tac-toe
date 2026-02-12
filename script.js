@@ -20,14 +20,29 @@ const gameBoard =(function gameBoard(){
         }
 
         //edge cases handling
-        if(row > board.length){
+        if(row > board.length || row < 1){
             throw Error("Your row number must be an integer between 1 and 3");
-        }else if(column > board[0].length){
+        }else if(column > board[0].length || column < 1){
             throw Error("Your column number must be an integer between 1 and 3")
         }
+
+        board[row][column]= mark;
     };
 
     return {showBoard, addMark};
 })();
+
+function Player(name, number){
+    const playerName = name;
+    const playerNumber = number;
+    let score = 0;
+
+    const getName = () => {return playerName};
+    const getNumber = () => {return playerNumber};
+    const getScore =() => {return score};
+    const increaseScore = () => score ++;
+
+    return {getName, getNumber, getScore, increaseScore};
+};
 
 gameBoard.showBoard();
