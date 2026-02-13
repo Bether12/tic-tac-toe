@@ -1,4 +1,4 @@
-const gameBoard =(function gameBoard(){
+const gameBoard =(function(){
     let board =[['X', 'X', 'X'], [' ', ' ', ' '], [' ', ' ', ' ']];
 
     const showBoard = function(){
@@ -29,7 +29,33 @@ const gameBoard =(function gameBoard(){
         board[row][column]= mark;
     };
 
-    return {showBoard, addMark};
+    const checkBoard = function(){
+        //first row check
+        if(board[0][0]!==" " && board[0][0] === board[0][1] && board[0][0] === board[0][2]){
+            return board[0][0];
+        }
+        //second row check
+        else if(board[1][0]!==" " && board[1][0] === board[1][1] && board[1][0] === board[1][2]){
+            return board[1][0];
+        }
+        //third row check
+        else if(board[2][0]!==" " && board[2][0] === board[2][1] && board[2][0] === board[2][2]){
+            return board[2][0];
+        }
+        //upper left to lower right diagonal check
+        else if(board[0][0]!==" " && board[0][0] === board[1][1] && board[0][0] === board[2][2]){
+            return board[0][0];
+        }
+        //upper right to lower left diagonal check
+        else if(board[2][0]!==" " && board[2][0] === board[1][1] && board[2][0] == board[0][2]){
+            return board[2][0];
+        }
+        else{
+            return " ";
+        }
+    };
+
+    return {showBoard, addMark, resetBoard};
 })();
 
 function Player(name, number){
@@ -44,5 +70,11 @@ function Player(name, number){
 
     return {getName, getNumber, getScore, increaseScore};
 };
+
+const gameMaster = (function(){
+    //TODO: method for each player turn
+    
+    //TODO: method to determine the winner
+})();
 
 gameBoard.showBoard();
