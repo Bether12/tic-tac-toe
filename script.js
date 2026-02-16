@@ -1,5 +1,5 @@
 const gameBoard =(function(){
-    let board =[['X', 'X', 'X'], [' ', ' ', ' '], [' ', ' ', ' ']];
+    let board =[[' ', ' ', ' '], [' ', ' ', ' '], [' ', ' ', ' ']];
 
     const showBoard = function(){
         for (let row of board){
@@ -25,7 +25,8 @@ const gameBoard =(function(){
         }else if(column > board[0].length || column < 1){
             throw Error("Your column number must be an integer between 1 and 3")
         }
-
+        //test
+        console.log(mark);
         board[row][column]= mark;
     };
 
@@ -67,7 +68,7 @@ const gameBoard =(function(){
         }
     };
 
-    return {showBoard, addMark, resetBoard};
+    return {showBoard, addMark, resetBoard, checkBoard};
 })();
 
 function Player(name, number){
@@ -85,8 +86,42 @@ function Player(name, number){
 
 const gameMaster = (function(){
     //TODO: method for each player turn
+    const play = function(){
+        let name1 = prompt("Player 1 name: ");
+        let name2 = prompt("Player 2 name: ");
+        const player1 = Player(name1, 1);
+        const player2 = Player(name2, 2);
+        for(let turn =0; turn<5; turn++){
+            let place=prompt(`${player1.getName()} turn, add your X`);
+            let [row, column] = place.split(' ');
+            //test
+            console.log(Number.parseInt(row), Number.parseInt(column));
+
+            gameBoard.addMark(player1, Number.parseInt(row), Number.parseInt(column));
+            place=prompt(`${player2.getName()} turn, add your O`);
+            [row, column] = place.split(' ');
+            //test
+            console.log(row, column);
+
+            gameBoard.addMark(player2, Number.parseInt(row), Number.parseInt(column));
+            gameBoard.showBoard();
+            if(turn>=3){
+                let result=gameBoard.checkBoard();
+                if(result === "X"){
+                    console.log(`${player1.getName()} wins!`);
+                }else if(result === "O"){
+                    console.log(`${player2.getName()} wins!`);
+                }else if(turn === 4){
+                    console.log("Tie!");
+                }else{
+                    continue;
+                }
+            }
+        }
+    };
     
+    return {play};
     //TODO: method to determine the winner
 })();
 
-gameBoard.showBoard();
+gameMaster.play();
