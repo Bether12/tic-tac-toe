@@ -25,8 +25,12 @@ const gameBoard =(function(){
         }else if(column > board[0].length || column < 1){
             throw Error("Your column number must be an integer between 1 and 3")
         }
-        //test
-        console.log(mark);
+
+        //position rewriting prevention
+        if(board[row][column] === 'X' || board[row][column] === 'O'){
+            throw Error("You can't add a mark to to a place with a existing one");
+        }
+
         board[row][column]= mark;
     };
 
@@ -87,24 +91,25 @@ function Player(name, number){
 const gameMaster = (function(){
     //TODO: method for each player turn
     const play = function(){
+        //player initialization
         let name1 = prompt("Player 1 name: ");
         let name2 = prompt("Player 2 name: ");
         const player1 = Player(name1, 1);
         const player2 = Player(name2, 2);
+
+        //game turns
         for(let turn =0; turn<5; turn++){
             let place=prompt(`${player1.getName()} turn, add your X`);
             let [row, column] = place.split(' ');
-            //test
-            console.log(Number.parseInt(row), Number.parseInt(column));
-
             gameBoard.addMark(player1, Number.parseInt(row), Number.parseInt(column));
+            
             place=prompt(`${player2.getName()} turn, add your O`);
             [row, column] = place.split(' ');
-            //test
-            console.log(row, column);
-
             gameBoard.addMark(player2, Number.parseInt(row), Number.parseInt(column));
+
             gameBoard.showBoard();
+
+            //win or tie checking from round 3
             if(turn>=3){
                 let result=gameBoard.checkBoard();
                 if(result === "X"){
