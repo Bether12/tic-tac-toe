@@ -26,12 +26,15 @@ const gameBoard =(function(){
             throw Error("Your column number must be an integer between 1 and 3")
         }
 
+        let rowZeroth = row-1;
+        let columnZeroth = column-1;
+
         //position rewriting prevention
-        if(board[row][column] === 'X' || board[row][column] === 'O'){
+        if(board[rowZeroth][columnZeroth] === 'X' || board[rowZeroth][columnZeroth] === 'O'){
             throw Error("You can't add a mark to to a place with a existing one");
         }
 
-        board[row][column]= mark;
+        board[rowZeroth][columnZeroth]= mark;
     };
 
     const checkBoard = function(){
@@ -102,6 +105,8 @@ const gameMaster = (function(){
             let place=prompt(`${player1.getName()} turn, add your X`);
             let [row, column] = place.split(' ');
             gameBoard.addMark(player1, Number.parseInt(row), Number.parseInt(column));
+
+            gameBoard.showBoard();
             
             place=prompt(`${player2.getName()} turn, add your O`);
             [row, column] = place.split(' ');
