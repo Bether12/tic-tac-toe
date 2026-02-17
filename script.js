@@ -12,14 +12,14 @@ const gameBoard =(function(){
     };
 
     const addMark = function(Player, row, column){
-        //TODO: handle non number rows and columns
+
         let mark;
         if(Player.getNumber()===1){
             mark = 'X';
         }else{
             mark = 'O';
         }
-        console.log(typeof(row));
+
         //edge cases handling
         if(typeof(row) != 'Number'|| row > board.length || row < 1){
             throw Error("Your row number must be an integer between 1 and 3");
@@ -100,6 +100,8 @@ const gameMaster = (function(){
 
         if(name1 === '' || name1 === null || name2 === '' || name2 === null){
             throw Error("Player names should not be empty");
+        }else if(name1 === name2){
+            throw Error("Player names must not be te same");
         }
 
         const player1 = Player(name1, 1);
