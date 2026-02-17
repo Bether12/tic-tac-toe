@@ -12,17 +12,18 @@ const gameBoard =(function(){
     };
 
     const addMark = function(Player, row, column){
+        //TODO: handle non number rows and columns
         let mark;
         if(Player.getNumber()===1){
             mark = 'X';
         }else{
             mark = 'O';
         }
-
+        console.log(typeof(row));
         //edge cases handling
-        if(row > board.length || row < 1){
+        if(typeof(row) != 'Number'|| row > board.length || row < 1){
             throw Error("Your row number must be an integer between 1 and 3");
-        }else if(column > board[0].length || column < 1){
+        }else if(typeof(column) != 'Number'|| column > board[0].length || column < 1){
             throw Error("Your column number must be an integer between 1 and 3")
         }
 
