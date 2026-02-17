@@ -92,7 +92,6 @@ function Player(name, number){
 };
 
 const gameMaster = (function(){
-    //TODO: method for each player turn
     const play = function(){
         //player initialization
         let name1 = prompt("Player 1 name: ");
@@ -101,7 +100,7 @@ const gameMaster = (function(){
         const player2 = Player(name2, 2);
 
         //game turns
-        for(let turn =0; turn<5; turn++){
+        for(let turn =0; turn<4; turn++){
             let place=prompt(`${player1.getName()} turn, add your X`);
             let [row, column] = place.split(' ');
             gameBoard.addMark(player1, Number.parseInt(row), Number.parseInt(column));
@@ -115,14 +114,17 @@ const gameMaster = (function(){
             gameBoard.showBoard();
 
             //win or tie checking from round 3
-            if(turn>=3){
+            if(turn>=2){
                 let result=gameBoard.checkBoard();
                 if(result === "X"){
                     console.log(`${player1.getName()} wins!`);
+                    return
                 }else if(result === "O"){
                     console.log(`${player2.getName()} wins!`);
+                    return
                 }else if(turn === 4){
                     console.log("Tie!");
+                    return
                 }else{
                     continue;
                 }
@@ -131,7 +133,6 @@ const gameMaster = (function(){
     };
     
     return {play};
-    //TODO: method to determine the winner
 })();
 
 gameMaster.play();
