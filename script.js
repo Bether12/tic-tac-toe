@@ -96,6 +96,11 @@ const gameMaster = (function(){
         //player initialization
         let name1 = prompt("Player 1 name: ");
         let name2 = prompt("Player 2 name: ");
+
+        if(name1 === '' || name1 === null || name2 === '' || name2 === null){
+            throw Error("Player names should not be empty");
+        }
+
         const player1 = Player(name1, 1);
         const player2 = Player(name2, 2);
 
@@ -113,7 +118,7 @@ const gameMaster = (function(){
 
             gameBoard.showBoard();
 
-            //win or tie checking from round 3
+            //win or tie checking from round 2
             if(turn>=2){
                 let result=gameBoard.checkBoard();
                 if(result === "X"){
