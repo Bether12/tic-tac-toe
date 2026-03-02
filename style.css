@@ -1,0 +1,20 @@
+body{
+    background-color: azure;
+    display: grid;
+    grid-template-rows: 100px 300px;
+    justify-items: center;
+}
+
+.board{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.board div{
+    height: 100px;
+    width: 100px;
+    border-radius: 10px;
+    border: 2px solid grey;
+}
