@@ -49,9 +49,9 @@ const gameBoard =(function(){
         }
 
         //edge cases handling
-        if(typeof(row) != 'Number'|| row > board.length || row < 1){
+        if(typeof row != 'number'|| row > board.length || row < 1){
             throw Error("Your row number must be an integer between 1 and 3");
-        }else if(typeof(column) != 'Number'|| column > board[0].length || column < 1){
+        }else if(typeof column  != 'number'|| column > board[0].length || column < 1){
             throw Error("Your column number must be an integer between 1 and 3")
         }
 
@@ -123,6 +123,8 @@ function Player(name, number){
 
 const gameMaster = (function(){
     const play = function(){
+        gameBoard.displayMaster.createBoard();
+        
         //player initialization
         let name1 = prompt("Player 1 name: ");
         let name2 = prompt("Player 2 name: ");
@@ -142,13 +144,13 @@ const gameMaster = (function(){
             let [row, column] = place.split(' ');
             gameBoard.addMark(player1, Number.parseInt(row), Number.parseInt(column));
 
-            gameBoard.showBoard();
+            gameBoard.displayMaster.showBoard();
             
             place=prompt(`${player2.getName()} turn, add your O`);
             [row, column] = place.split(' ');
             gameBoard.addMark(player2, Number.parseInt(row), Number.parseInt(column));
 
-            gameBoard.showBoard();
+            gameBoard.displayMaster.showBoard();
 
             //win or tie checking from round 2
             if(turn>=2){
@@ -172,8 +174,4 @@ const gameMaster = (function(){
     return {play};
 })();
 
-gameBoard.displayMaster.createBoard();
-
-gameBoard.displayMaster.showBoard();
-
-//gameMaster.play();
+gameMaster.play();
