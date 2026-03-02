@@ -1,12 +1,12 @@
 const gameBoard =(function(){
     let board =[[' ', ' ', ' '], [' ', ' ', ' '], [' ', ' ', ' ']];
-
+    //TODO: erase this function
     const showBoard = function(){
         for (let row of board){
             console.log(`| ${row[0]} | ${row[1]} | ${row[2]} |`)
         }
     };
-
+    //TODO: erase this function
     const resetBoard = function(){
         board = [[' ', ' ', ' '], [' ', ' ', ' '], [' ', ' ', ' ']];
     };
@@ -100,11 +100,16 @@ const displayMaster = (function(){
         for(let i = 0; i<3; i++){
             for(let j = 0; j<3; j++){
                 const cell = document.createElement("div");
-                cell.className =`${i},${j}`;
+                cell.dataset.row =`${i}`;
+                cell.dataset.column = `${j}`;
                 board.append(cell);
             }
         }
     };
+
+    const showBoard = function(
+        
+    ){};
 
     return {createBoard};
 })();
