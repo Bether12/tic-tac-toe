@@ -1,5 +1,28 @@
 const gameBoard =(function(){
     let board =[[' ', ' ', ' '], [' ', ' ', ' '], [' ', ' ', ' ']];
+    
+    const displayMaster = (function(){
+
+        const board = document.querySelector(".board");
+
+        const createBoard = function(){
+            for(let i = 0; i<3; i++){
+                for(let j = 0; j<3; j++){
+                    const cell = document.createElement("div");
+                    cell.dataset.row =`${i}`;
+                    cell.dataset.column = `${j}`;
+                    board.append(cell);
+                }
+            }
+        };
+
+        const showBoard = function(
+            
+        ){};
+
+        return {createBoard};
+    })();
+
     //TODO: erase this function
     const showBoard = function(){
         for (let row of board){
@@ -76,7 +99,7 @@ const gameBoard =(function(){
         }
     };
 
-    return {showBoard, addMark, resetBoard, checkBoard};
+    return {displayMaster, showBoard, addMark, resetBoard, checkBoard};
 })();
 
 function Player(name, number){
@@ -92,27 +115,6 @@ function Player(name, number){
     return {getName, getNumber, getScore, increaseScore};
 };
 
-const displayMaster = (function(){
-
-    const board = document.querySelector(".board");
-
-    const createBoard = function(){
-        for(let i = 0; i<3; i++){
-            for(let j = 0; j<3; j++){
-                const cell = document.createElement("div");
-                cell.dataset.row =`${i}`;
-                cell.dataset.column = `${j}`;
-                board.append(cell);
-            }
-        }
-    };
-
-    const showBoard = function(
-        
-    ){};
-
-    return {createBoard};
-})();
 
 const gameMaster = (function(){
     const play = function(){
@@ -165,6 +167,6 @@ const gameMaster = (function(){
     return {play};
 })();
 
-displayMaster.createBoard();
+gameBoard.displayMaster.createBoard();
 
 gameMaster.play();
