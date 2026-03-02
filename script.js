@@ -92,6 +92,23 @@ function Player(name, number){
     return {getName, getNumber, getScore, increaseScore};
 };
 
+const displayMaster = (function(){
+
+    const board = document.querySelector(".board");
+
+    const createBoard = function(){
+        for(let i = 0; i<3; i++){
+            for(let j = 0; j<3; j++){
+                const cell = document.createElement("div");
+                cell.className =`${i},${j}`;
+                board.append(cell);
+            }
+        }
+    };
+
+    return {createBoard};
+})();
+
 const gameMaster = (function(){
     const play = function(){
         //player initialization
@@ -142,5 +159,7 @@ const gameMaster = (function(){
     
     return {play};
 })();
+
+displayMaster.createBoard();
 
 gameMaster.play();
