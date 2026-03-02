@@ -13,8 +13,12 @@ body{
 }
 
 .board div{
+    display: grid;
+    justify-items: center;
+    align-items: center;
     height: 100px;
     width: 100px;
     border-radius: 10px;
     border: 2px solid grey;
+    font-size: 5.5rem;
 }
