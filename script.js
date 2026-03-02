@@ -3,7 +3,7 @@ const gameBoard =(function(){
     
     const displayMaster = (function(){
 
-        const board = document.querySelector(".board");
+        const boardDiv = document.querySelector(".board");
 
         const createBoard = function(){
             for(let i = 0; i<3; i++){
@@ -11,16 +11,21 @@ const gameBoard =(function(){
                     const cell = document.createElement("div");
                     cell.dataset.row =`${i}`;
                     cell.dataset.column = `${j}`;
-                    board.append(cell);
+                    boardDiv.append(cell);
                 }
             }
         };
 
-        const showBoard = function(
-            
-        ){};
+        const showBoard = function(){
+            const cells = boardDiv.childNodes;
+            for(let i = 0; i<9; i++){
+                let row = cells[i].dataset.row;
+                let column = cells[i].dataset.column;
+                cells[i].textContent=board[row][column];
+            }
+        };
 
-        return {createBoard};
+        return {createBoard, showBoard};
     })();
 
     //TODO: erase this function
@@ -169,4 +174,6 @@ const gameMaster = (function(){
 
 gameBoard.displayMaster.createBoard();
 
-gameMaster.play();
+gameBoard.displayMaster.showBoard();
+
+//gameMaster.play();
