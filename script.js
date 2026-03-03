@@ -121,10 +121,8 @@ function Player(name, number){
 
     const getName = () => {return playerName};
     const getNumber = () => {return playerNumber};
-    const getScore =() => {return score};
-    const increaseScore = () => score ++;
 
-    return {getName, getNumber, getScore, increaseScore};
+    return {getName, getNumber};
 };
 
 
