@@ -25,12 +25,16 @@ const gameBoard =(function(){
             }
         };
 
-        const getPlayersName = function(){
+        const getPlayersName = function(handle){
+            const dialog = document.querySelector('dialog');
+            dialog.showModal();
+
             const startButton = document.querySelector('#start');
             startButton.addEventListener('click',(e)=>{
                 const player1Name = document.querySelector('#player1').value;
                 const player2Name = document.querySelector('#player2').value;
-                console.log(player1Name, player2Name);
+                dialog.hidden = true;
+                handle(player1Name, player2Name);
             });
         };
 
@@ -129,54 +133,51 @@ const gameMaster = (function(){
         gameBoard.displayMaster.createBoard();
         
         //player initialization
-        let name1 = prompt("Player 1 name: ");
-        let name2 = prompt("Player 2 name: ");
+        gameBoard.displayMaster.getPlayersName(function(name1, name2){
+            if(name1 === '' || name1 === null || name2 === '' || name2 === null){
+                throw Error("Player names should not be empty");
+            }else if(name1 === name2){
+                throw Error("Player names must not be te same");
+            }
 
-        if(name1 === '' || name1 === null || name2 === '' || name2 === null){
-            throw Error("Player names should not be empty");
-        }else if(name1 === name2){
-            throw Error("Player names must not be te same");
-        }
-
-        const player1 = Player(name1, 1);
-        const player2 = Player(name2, 2);
-
-        //game turns
-        for(let turn =0; turn<4; turn++){
-            let place=prompt(`${player1.getName()} turn, add your X`);
-            let [row, column] = place.split(' ');
-            gameBoard.addMark(player1, Number.parseInt(row), Number.parseInt(column));
-
-            gameBoard.displayMaster.showBoard();
+            const player1 = Player(name1, 1);
+            const player2 = Player(name2, 2);
             
-            place=prompt(`${player2.getName()} turn, add your O`);
-            [row, column] = place.split(' ');
-            gameBoard.addMark(player2, Number.parseInt(row), Number.parseInt(column));
+            //game turns
+            for(let turn =0; turn<4; turn++){
+                let place=prompt(`${player1.getName()} turn, add your X`);
+                let [row, column] = place.split(' ');
+                gameBoard.addMark(player1, Number.parseInt(row), Number.parseInt(column));
 
-            gameBoard.displayMaster.showBoard();
+                gameBoard.displayMaster.showBoard();
+                
+                place=prompt(`${player2.getName()} turn, add your O`);
+                [row, column] = place.split(' ');
+                gameBoard.addMark(player2, Number.parseInt(row), Number.parseInt(column));
 
-            //win or tie checking from round 2
-            if(turn>=2){
-                let result=gameBoard.checkBoard();
-                if(result === "X"){
-                    console.log(`${player1.getName()} wins!`);
-                    return
-                }else if(result === "O"){
-                    console.log(`${player2.getName()} wins!`);
-                    return
-                }else if(turn === 4){
-                    console.log("Tie!");
-                    return
-                }else{
-                    continue;
+                gameBoard.displayMaster.showBoard();
+
+                //win or tie checking from round 2
+                if(turn>=2){
+                    let result=gameBoard.checkBoard();
+                    if(result === "X"){
+                        console.log(`${player1.getName()} wins!`);
+                        return
+                    }else if(result === "O"){
+                        console.log(`${player2.getName()} wins!`);
+                        return
+                    }else if(turn === 4){
+                        console.log("Tie!");
+                        return
+                    }else{
+                        continue;
+                    }
                 }
             }
-        }
+        });
     };
     
     return {play};
 })();
 
-gameBoard.displayMaster.getPlayersName();
-
-//gameMaster.play();
+gameMaster.play();
