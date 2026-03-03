@@ -25,15 +25,18 @@ const gameBoard =(function(){
             }
         };
 
-        return {createBoard, showBoard};
+        const getPlayersName = function(){
+            const startButton = document.querySelector('#start');
+            startButton.addEventListener('click',(e)=>{
+                const player1Name = document.querySelector('#player1').value;
+                const player2Name = document.querySelector('#player2').value;
+                console.log(player1Name, player2Name);
+            });
+        };
+
+        return {createBoard, showBoard, getPlayersName};
     })();
 
-    //TODO: erase this function
-    const showBoard = function(){
-        for (let row of board){
-            console.log(`| ${row[0]} | ${row[1]} | ${row[2]} |`)
-        }
-    };
     //TODO: erase this function
     const resetBoard = function(){
         board = [[' ', ' ', ' '], [' ', ' ', ' '], [' ', ' ', ' ']];
@@ -104,7 +107,7 @@ const gameBoard =(function(){
         }
     };
 
-    return {displayMaster, showBoard, addMark, resetBoard, checkBoard};
+    return {displayMaster, addMark, resetBoard, checkBoard};
 })();
 
 function Player(name, number){
@@ -174,4 +177,6 @@ const gameMaster = (function(){
     return {play};
 })();
 
-gameMaster.play();
+gameBoard.displayMaster.getPlayersName();
+
+//gameMaster.play();
