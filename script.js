@@ -136,6 +136,8 @@ const gameMaster = (function(){
         const h1 = document.querySelector('h1');
         const restartButton = document.createElement('button');
         restartButton.textContent = 'Play Again';
+        const resetButton = document.createElement('button');
+        resetButton.textContent = 'Reset Game';
 
         //player initialization
         gameBoard.displayMaster.getPlayersName(function(name1, name2){
@@ -173,6 +175,10 @@ const gameMaster = (function(){
                     //TODO:make the board stop listening for click events
                     boardDiv.removeEventListener('click', handler);
 
+                    resetButton.addEventListener('click', ()=>{
+                        window.location.reload();
+                    });
+
                     restartButton.addEventListener('click', ()=>{
                         gameBoard.resetBoard();
                         currentTurn = player1;
@@ -182,6 +188,7 @@ const gameMaster = (function(){
                         restartButton.remove();
                     });
                     boardDiv.append(restartButton);
+                    boardDiv.append(resetButton);
                 }        
             }
 
