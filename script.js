@@ -134,6 +134,8 @@ const gameMaster = (function(){
         
         const boardDiv = document.querySelector(".board");
         const h1 = document.querySelector('h1');
+        const restartButton = document.createElement('button');
+        restartButton.textContent = 'Play Again';
 
         //player initialization
         gameBoard.displayMaster.getPlayersName(function(name1, name2){
@@ -150,7 +152,7 @@ const gameMaster = (function(){
             h1.textContent = `${currentTurn === player1 ? player1.getName() : player2.getName()} turn`;
             
             //game logic
-            boardDiv.addEventListener('click', (e)=>{
+            function handler(e){
                 const cell = e.target.closest('.cell');
                 if(!cell) return;
 
@@ -168,8 +170,22 @@ const gameMaster = (function(){
                 let winner = gameBoard.checkBoard();
                 if(winner != ' '){
                     h1.textContent = `${winner === 'X'? player1.getName() : player2.getName()} wins!`;
-                } 
-            });
+                    //TODO:make the board stop listening for click events
+                    boardDiv.removeEventListener('click', handler);
+
+                    restartButton.addEventListener('click', ()=>{
+                        gameBoard.resetBoard();
+                        currentTurn = player1;
+                        h1.textContent = `${player1.getName()} turn`;
+                        gameBoard.displayMaster.showBoard();
+                        boardDiv.addEventListener('click', handler);
+                        restartButton.remove();
+                    });
+                    boardDiv.append(restartButton);
+                }        
+            }
+
+            boardDiv.addEventListener('click', handler);
         });
     };
     
