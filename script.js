@@ -67,6 +67,7 @@ const gameBoard =(function(){
 
         //position rewriting prevention
         if(board[rowZeroth][columnZeroth] === 'X' || board[rowZeroth][columnZeroth] === 'O'){
+            alert("You can't add a mark to to a place with a existing one");
             throw Error("You can't add a mark to to a place with a existing one");
         }
 
@@ -140,8 +141,10 @@ const gameMaster = (function(){
         //player initialization
         gameBoard.displayMaster.getPlayersName(function(name1, name2){
             if(name1 === '' || name1 === null || name2 === '' || name2 === null){
+                alert("Player names should not be empty");
                 throw Error("Player names should not be empty");
             }else if(name1 === name2){
+                alert("Player names must not be te same");
                 throw Error("Player names must not be te same");
             }
 
