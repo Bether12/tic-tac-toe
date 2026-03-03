@@ -9,8 +9,9 @@ const gameBoard =(function(){
             for(let i = 0; i<3; i++){
                 for(let j = 0; j<3; j++){
                     const cell = document.createElement("div");
-                    cell.dataset.row =`${i}`;
-                    cell.dataset.column = `${j}`;
+                    cell.className = 'cell';
+                    cell.dataset.row =`${i+1}`;
+                    cell.dataset.column = `${j+1}`;
                     boardDiv.append(cell);
                 }
             }
@@ -21,7 +22,7 @@ const gameBoard =(function(){
             for(let i = 0; i<9; i++){
                 let row = cells[i].dataset.row;
                 let column = cells[i].dataset.column;
-                cells[i].textContent=board[row][column];
+                cells[i].textContent=board[row-1][column-1];
             }
         };
 
@@ -33,7 +34,7 @@ const gameBoard =(function(){
             startButton.addEventListener('click',(e)=>{
                 const player1Name = document.querySelector('#player1').value;
                 const player2Name = document.querySelector('#player2').value;
-                dialog.hidden = true;
+                dialog.close();
                 handle(player1Name, player2Name);
             });
         };
@@ -41,7 +42,6 @@ const gameBoard =(function(){
         return {createBoard, showBoard, getPlayersName};
     })();
 
-    //TODO: erase this function
     const resetBoard = function(){
         board = [[' ', ' ', ' '], [' ', ' ', ' '], [' ', ' ', ' ']];
     };
@@ -132,6 +132,9 @@ const gameMaster = (function(){
     const play = function(){
         gameBoard.displayMaster.createBoard();
         
+        const boardDiv = document.querySelector(".board");
+        const h1 = document.querySelector('h1');
+
         //player initialization
         gameBoard.displayMaster.getPlayersName(function(name1, name2){
             if(name1 === '' || name1 === null || name2 === '' || name2 === null){
@@ -142,38 +145,31 @@ const gameMaster = (function(){
 
             const player1 = Player(name1, 1);
             const player2 = Player(name2, 2);
+
+            let currentTurn = player1;
+            h1.textContent = `${currentTurn === player1 ? player1.getName() : player2.getName()} turn`;
             
-            //game turns
-            for(let turn =0; turn<4; turn++){
-                let place=prompt(`${player1.getName()} turn, add your X`);
-                let [row, column] = place.split(' ');
-                gameBoard.addMark(player1, Number.parseInt(row), Number.parseInt(column));
+            //game logic
+            boardDiv.addEventListener('click', (e)=>{
+                const cell = e.target.closest('.cell');
+                if(!cell) return;
 
-                gameBoard.displayMaster.showBoard();
-                
-                place=prompt(`${player2.getName()} turn, add your O`);
-                [row, column] = place.split(' ');
-                gameBoard.addMark(player2, Number.parseInt(row), Number.parseInt(column));
+                const row = parseInt(cell.dataset.row);
+                const column = parseInt(cell.dataset.column);
 
+                //game turns logic
+                gameBoard.addMark(currentTurn, row, column);
                 gameBoard.displayMaster.showBoard();
 
-                //win or tie checking from round 2
-                if(turn>=2){
-                    let result=gameBoard.checkBoard();
-                    if(result === "X"){
-                        console.log(`${player1.getName()} wins!`);
-                        return
-                    }else if(result === "O"){
-                        console.log(`${player2.getName()} wins!`);
-                        return
-                    }else if(turn === 4){
-                        console.log("Tie!");
-                        return
-                    }else{
-                        continue;
-                    }
-                }
-            }
+                currentTurn = (currentTurn === player1 ? player2 : player1);
+                h1.textContent = `${currentTurn === player1 ? player1.getName() : player2.getName()} turn`;
+
+                //checking for a winner
+                let winner = gameBoard.checkBoard();
+                if(winner != ' '){
+                    h1.textContent = `${winner === 'X'? player1.getName() : player2.getName()} wins!`;
+                } 
+            });
         });
     };
     
