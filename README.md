@@ -40,3 +40,17 @@ The game board is represented mathematically as a $3 \times 3$ matrix (a 2D arra
 3. Click "Start".
 4. Take turns clicking on the grid squares to place your respective mark.
 5. The first player to align three marks horizontally, vertically, or diagonally wins!
+
+## Screenshots
+
+**Page Initial Load**
+
+![Tic Tac Toe - Initial Load](screenshots/initial_load.png)
+
+**Sample Game**
+
+![Tic Tac Toe - Sample Game](screenshots/sample_game.png)
+
+## Live page
+
+[Test the game](https://bether12.github.io/tic-tac-toe)
